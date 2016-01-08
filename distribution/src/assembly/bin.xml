@@ -1,0 +1,56 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd">
+	<id>bin</id>
+	<formats>
+		<format>dir</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>../OCBA_Backend/config</directory>
+			<outputDirectory>conf</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>../OCBA_Backend/rData</directory>
+			<outputDirectory>rData</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>../OCBA_Backend/Tokens</directory>
+			<outputDirectory>Tokens</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>../tweetstreaming/conf</directory>
+			<outputDirectory>conf</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>../../socialtsquery/conf</directory>
+			<outputDirectory>conf</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>bin</directory>
+			<outputDirectory>bin</outputDirectory>
+		</fileSet>
+	</fileSets>
+	<moduleSets>
+		<moduleSet>
+			<!-- Enable access to all projects in the current multimodule build! -->
+			<useAllReactorProjects>true</useAllReactorProjects>
+
+			<!-- Now, select which projects to include in this module-set. -->
+			<includes>
+				<include>fanxia:microblogdao</include>
+				<include>fanxia:socialtsquery-client</include>
+				<include>fanxia:tweetstreaming</include>
+				<include>yeli:OCBA_Backend</include>
+				<include>fanxia:socialtsquery</include>
+			</includes>
+			<binaries>
+				<outputDirectory>lib</outputDirectory>
+				<unpack>false</unpack>
+			</binaries>
+		</moduleSet>
+	</moduleSets>
+
+</assembly>
