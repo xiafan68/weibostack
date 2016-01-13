@@ -39,15 +39,13 @@ public class MaxHistogram {
 		if (k <= 1)
 			return new MaxHistogram();
 		int start = segs.get(0).getStart();
-		SegsMaxHistConstruction1 con = new SegsMaxHistConstruction1(start,
-				segs, k);
+		SegsMaxHistConstruction1 con = new SegsMaxHistConstruction1(start, segs, k);
 		return con.hist();
 	}
 
 	public static MaxHistogram constructByPoints(List<Segment> segs) {
 
-		int width = segs.get(segs.size() - 1).getEndTime()
-				- segs.get(0).getStart() + 1;
+		int width = segs.get(segs.size() - 1).getEndTime() - segs.get(0).getStart() + 1;
 		if (width < 16)
 			return null;
 		int k = (int) (Math.log(width) / Math.log(4));
@@ -154,12 +152,11 @@ public class MaxHistogram {
 		 *            从最后一个点到当前点之后的err和最大值
 		 */
 		public void updateErr(int curPoint, int end, Pair<Float, Float> err) {
-			if (points.get(curPoint) > err.arg0) {
-				err.arg1 = (points.get(curPoint) - err.arg0) * (end - curPoint)
-						+ err.arg1;
-				err.arg0 = points.get(curPoint);
+			if (points.get(curPoint) > err.getKey()) {
+				err.setValue((points.get(curPoint) - err.getKey()) * (end - curPoint) + err.getValue());
+				err.setKey(points.get(curPoint));
 			} else {
-				err.arg1 = err.arg0 - points.get(curPoint) + err.arg1;
+				err.setValue(err.getKey() - points.get(curPoint) + err.getValue());
 			}
 		}
 
@@ -174,12 +171,10 @@ public class MaxHistogram {
 				idx.add(-1);
 				curOpt[i] = new Pair<Float, List<Integer>>(0f, idx);
 				if (points.get(i) > curMax) {
-					curOpt[i].arg0 = curOpt[i - 1].arg0
-							+ (points.get(i) - curMax) * i;
+					curOpt[i].setKey(curOpt[i - 1].getKey() + (points.get(i) - curMax) * i);
 					curMax = points.get(i);
 				} else {
-					curOpt[i].arg0 = curOpt[i - 1].arg0
-							+ (curMax - points.get(i));
+					curOpt[i].setKey(curOpt[i - 1].getKey() + (curMax - points.get(i)));
 				}
 			}
 			opts[0] = curOpt[points.size() - 1];
@@ -192,22 +187,20 @@ public class MaxHistogram {
 			for (int ck = 1; ck < k; ck++) {
 				System.out.println("iter " + ck);
 				for (int last = end; last >= ck; last--) {
-					curOpt[last] = new Pair<Float, List<Integer>>(
-							Float.MAX_VALUE, new ArrayList<Integer>());
-					Pair<Float, Float> err = new Pair<Float, Float>(
-							points.get(last), 0f);
+					curOpt[last] = new Pair<Float, List<Integer>>(Float.MAX_VALUE, new ArrayList<Integer>());
+					Pair<Float, Float> err = new Pair<Float, Float>(points.get(last), 0f);
 
 					int idx = last - 1;
 					for (int curStart = last - 1; curStart >= ck - 1; curStart--) {
 						updateErr(curStart + 1, last, err);
-						float curErr = curOpt[curStart].arg0 + err.arg1;
-						if (curErr < curOpt[last].arg0) {
+						float curErr = curOpt[curStart].getKey() + err.getValue();
+						if (curErr < curOpt[last].getKey()) {
 							idx = curStart;
-							curOpt[last].arg0 = curErr;
+							curOpt[last].setKey(curErr);
 						}
 					}
-					curOpt[last].arg1.addAll(curOpt[idx].arg1);
-					curOpt[last].arg1.add(idx);
+					curOpt[last].getValue().addAll(curOpt[idx].getValue());
+					curOpt[last].getValue().add(idx);
 				}
 				opts[ck] = curOpt[end];
 			}
@@ -219,10 +212,10 @@ public class MaxHistogram {
 			float minErr = Float.MAX_VALUE;
 
 			for (int i = 0; i < opts.length; i++) {
-				if (opts[i].arg0 < minErr)
+				if (opts[i].getKey() < minErr)
 					chosenK = i;
 			}
-			List<Integer> splitters = opts[chosenK].arg1;
+			List<Integer> splitters = opts[chosenK].getValue();
 			splitters.remove(0);
 			// recover the splitters
 			MaxHistogram ret = new MaxHistogram();
@@ -230,12 +223,10 @@ public class MaxHistogram {
 			Iterator<Integer> iter = splitters.iterator();
 			while (iter.hasNext()) {
 				int splitter = iter.next();
-				ret.addWindow(startTime + pre, startTime + splitter + 1,
-						getMax(pre, splitter));
+				ret.addWindow(startTime + pre, startTime + splitter + 1, getMax(pre, splitter));
 				pre = splitter + 1;
 			}
-			ret.addWindow(startTime + pre, startTime + points.size(),
-					getMax(pre, points.size() - 1));
+			ret.addWindow(startTime + pre, startTime + points.size(), getMax(pre, points.size() - 1));
 			return ret;
 		}
 
@@ -283,14 +274,13 @@ public class MaxHistogram {
 			for (int i = 0; i < points.size() - 1; i++) {
 				for (int j = i + 1; j < points.size(); j++) {
 					errs[i][j] = new Pair<Float, Float>();
-					if (points.get(j) > errs[i][j - 1].arg1) {
-						errs[i][j].arg0 = (points.get(j) - errs[i][j - 1].arg1)
-								* (j - i) + errs[i][j - 1].arg0;
-						errs[i][j].arg1 = points.get(j);
+					if (points.get(j) > errs[i][j - 1].getValue()) {
+						errs[i][j].setKey(
+								(points.get(j) - errs[i][j - 1].getValue()) * (j - i) + errs[i][j - 1].getKey());
+						errs[i][j].setValue(points.get(j));
 					} else {
-						errs[i][j].arg0 = errs[i][j - 1].arg1 - points.get(j)
-								+ errs[i][j - 1].arg0;
-						errs[i][j].arg1 = errs[i][j - 1].arg1;
+						errs[i][j].setKey(errs[i][j - 1].getValue() - points.get(j) + errs[i][j - 1].getKey());
+						errs[i][j].setValue(errs[i][j - 1].getValue());
 					}
 				}
 			}
@@ -315,25 +305,23 @@ public class MaxHistogram {
 			float ret = 0f;
 			if (start >= end)
 				return ret;
-			return errs[start][end].arg0;
+			return errs[start][end].getKey();
 		}
 
 		private float getMax(int start, int end) {
-			return errs[start][end].arg1;
+			return errs[start][end].getValue();
 		}
 
 		public void construct() {
 			init();
 			for (int ck = 1; ck < k; ck++) {
 				for (int last = ck; last < points.size(); last++) {
-					trace[ck][last] = new Pair<Float, Integer>(Float.MAX_VALUE,
-							-1);
+					trace[ck][last] = new Pair<Float, Integer>(Float.MAX_VALUE, -1);
 					for (int curStart = ck - 1; curStart < last; curStart++) {
-						float curErr = trace[ck - 1][curStart].arg0
-								+ getError(curStart + 1, last);
-						if (curErr < trace[ck][last].arg0) {
-							trace[ck][last].arg0 = curErr;
-							trace[ck][last].arg1 = curStart;
+						float curErr = trace[ck - 1][curStart].getKey() + getError(curStart + 1, last);
+						if (curErr < trace[ck][last].getKey()) {
+							trace[ck][last].setKey(curErr);
+							trace[ck][last].setValue(curStart);
 						}
 					}
 				}
@@ -347,9 +335,9 @@ public class MaxHistogram {
 			int j = points.size() - 1;
 
 			for (int i = 0; i < k; i++) {
-				if (trace[i][j].arg0 < minErr) {
+				if (trace[i][j].getKey() < minErr) {
 					chosenK = i;
-					minErr = trace[i][j].arg0;
+					minErr = trace[i][j].getKey();
 				}
 			}
 			System.out.println("non optimized" + minErr);
@@ -358,7 +346,7 @@ public class MaxHistogram {
 
 			for (int i = chosenK; i > 0; i--) {
 				stack.push(trace[i][j]);
-				j = stack.peek().arg1;
+				j = stack.peek().getValue();
 			}
 
 			// recover the splitters
@@ -366,12 +354,10 @@ public class MaxHistogram {
 			int pre = 0;
 			while (!stack.isEmpty()) {
 				Pair<Float, Integer> cur = stack.pop();
-				ret.addWindow(startTime + pre, startTime + cur.arg1 + 1,
-						getMax(pre, cur.arg1));
-				pre = cur.arg1 + 1;
+				ret.addWindow(startTime + pre, startTime + cur.getValue() + 1, getMax(pre, cur.getValue()));
+				pre = cur.getValue() + 1;
 			}
-			ret.addWindow(startTime + pre, startTime + points.size(),
-					getMax(pre, points.size() - 1));
+			ret.addWindow(startTime + pre, startTime + points.size(), getMax(pre, points.size() - 1));
 			return ret;
 		}
 	}
@@ -408,20 +394,16 @@ public class MaxHistogram {
 
 					float preErr = 0.0f;
 					if (i != j) {
-						preErr = errs[0][i][j].arg0;
+						preErr = errs[0][i][j].getKey();
 					}
 					int curWidth = curSeg.getEndTime() - curSeg.getStart() - 1;
 					if (cur > max) {
-						errs[0][i][j + 1] = new Pair<Float, Integer>(preErr
-								+ (cur - max) * width + curWidth * cur
-								- curSeg.getValue() + curSeg.getStartCount()
-								+ curSeg.getEndCount(), j + 1);
+						errs[0][i][j + 1] = new Pair<Float, Integer>(preErr + (cur - max) * width + curWidth * cur
+								- curSeg.getValue() + curSeg.getStartCount() + curSeg.getEndCount(), j + 1);
 						max = cur;
 					} else {
-						errs[0][i][j + 1] = new Pair<Float, Integer>(
-								preErr + curWidth * max - curSeg.getValue()
-										+ curSeg.getStartCount()
-										+ curSeg.getEndCount(), j + 1);
+						errs[0][i][j + 1] = new Pair<Float, Integer>(preErr + curWidth * max - curSeg.getValue()
+								+ curSeg.getStartCount() + curSeg.getEndCount(), j + 1);
 					}
 					width += curWidth;
 				}
@@ -436,15 +418,13 @@ public class MaxHistogram {
 						float minErr = Float.MAX_VALUE;
 						int minIdx = j + 1;
 						for (int m = i + iter; m < j; m++) {
-							float err = errs[iter - 1][i][m].arg0
-									+ errs[0][m][j].arg0;
+							float err = errs[iter - 1][i][m].getKey() + errs[0][m][j].getKey();
 							if (err < minErr) {
 								minErr = err;
 								minIdx = m;
 							}
 						}
-						errs[iter][i][j] = new Pair<Float, Integer>(minErr,
-								minIdx);
+						errs[iter][i][j] = new Pair<Float, Integer>(minErr, minIdx);
 					}
 				}
 		}
@@ -469,8 +449,8 @@ public class MaxHistogram {
 			int j = segs.size();
 			for (int i = k - 1; i >= 0; i--) {
 				stack.push(errs[i][0][j]);
-				int tmp = stack.peek().arg1;
-				stack.peek().arg1 = j;
+				int tmp = stack.peek().getValue();
+				stack.peek().setValue(j);
 				j = tmp;
 			}
 
@@ -480,16 +460,16 @@ public class MaxHistogram {
 			while (!stack.isEmpty()) {
 				Pair<Float, Integer> cur = stack.pop();
 				float max = 0;
-				for (int i = pre; i <= cur.arg1; i++) {
+				for (int i = pre; i <= cur.getValue(); i++) {
 					float val = getPoint(i);
 					if (val > max) {
 						max = val;
 					}
 				}
-				ret.addWindow(start, getTime(cur.arg1), max);
+				ret.addWindow(start, getTime(cur.getValue()), max);
 
-				pre = cur.arg1;
-				start += cur.arg1;
+				pre = cur.getValue();
+				start += cur.getValue();
 			}
 			return ret;
 		}
@@ -533,13 +513,11 @@ public class MaxHistogram {
 					}
 					int curWidth = curSeg.getEndTime() - curSeg.getStart() - 1;
 					if (cur > max) {
-						maxErr[i][j + 1] = preErr + (cur - max) * width
-								+ curWidth * cur - curSeg.getValue()
+						maxErr[i][j + 1] = preErr + (cur - max) * width + curWidth * cur - curSeg.getValue()
 								+ curSeg.getStartCount() + curSeg.getEndCount();
 						max = cur;
 					} else {
-						maxErr[i][j + 1] = preErr + curWidth * max
-								- curSeg.getValue() + curSeg.getStartCount()
+						maxErr[i][j + 1] = preErr + curWidth * max - curSeg.getValue() + curSeg.getStartCount()
 								+ curSeg.getEndCount();
 					}
 					width += curWidth;
@@ -557,7 +535,7 @@ public class MaxHistogram {
 					float minErr = Float.MAX_VALUE;
 					int minIdx = i;
 					for (int m = iter; m < i; m++) {
-						float err = errs[m][iter - 1].arg0 + maxErr[m][i];
+						float err = errs[m][iter - 1].getKey() + maxErr[m][i];
 						if (err < minErr) {
 							minErr = err;
 							minIdx = m;
@@ -587,7 +565,7 @@ public class MaxHistogram {
 			stack.add(segs.size());
 			int j = segs.size();
 			for (int i = k - 1; i > 0; i--) {
-				stack.push(errs[j][i].arg1);
+				stack.push(errs[j][i].getValue());
 				j = stack.peek();
 			}
 
@@ -639,12 +617,10 @@ public class MaxHistogram {
 
 		// System.out.println(construct(start, points, 10));
 		long startTime = System.currentTimeMillis();
-		OptimizedMaxHist cons = new OptimizedMaxHist(start, points,
-				(int) (Math.log(size) / Math.log(4)));
+		OptimizedMaxHist cons = new OptimizedMaxHist(start, points, (int) (Math.log(size) / Math.log(4)));
 		System.out.println("----------");
 		System.out.println(cons.hist());
-		System.out.println("time cost "
-				+ (System.currentTimeMillis() - startTime) / 1000.0);
+		System.out.println("time cost " + (System.currentTimeMillis() - startTime) / 1000.0);
 		points = new ArrayList<Float>();
 		for (int i = 19; i >= 0; i--) {
 			points.add((float) i);

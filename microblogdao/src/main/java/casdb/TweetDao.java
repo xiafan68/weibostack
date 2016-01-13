@@ -13,8 +13,8 @@ import com.datastax.driver.core.Row;
 import casdb.DBUtil.StatusFieldInSpector;
 import casdb.DBUtil.StatusFieldValueInSpector;
 import kafkastore.TimeSeriesUpdateState;
+import util.DateUtil;
 import weibo4j.model.Status;
-import xiafan.util.DateUtil;
 
 public class TweetDao {
 	PreparedStatement statusStatement;

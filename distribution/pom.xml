@@ -20,28 +20,28 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
-			<groupId>fanxia</groupId>
+			<groupId>dase</groupId>
 			<artifactId>microblogdao</artifactId>
 			<version>0.0.1</version>
 		</dependency>
 		<dependency>
-			<groupId>fanxia</groupId>
+			<groupId>dase</groupId>
 			<artifactId>socialtsquery-client</artifactId>
 			<version>0.0.1</version>
 		</dependency>
 		<dependency>
-			<groupId>fanxia</groupId>
+			<groupId>dase</groupId>
 			<artifactId>socialtsquery</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>fanxia</groupId>
+			<groupId>dase</groupId>
 			<artifactId>tweetstreaming</artifactId>
 			<version>0.0.1</version>
 		</dependency>
 		<dependency>
-			<groupId>yeli</groupId>
-			<artifactId>OCBA_Backend</artifactId>
+			<groupId>dase</groupId>
+			<artifactId>weibocrawler</artifactId>
 			<version>1.0</version>
 		</dependency>
 	</dependencies>
@@ -99,6 +99,11 @@
 						<program>
 							<mainClass>server.TKSearchServer</mainClass>
 							<id>TKSearchServer</id>
+							<jvmSettings>
+								<initialMemorySize>1024m</initialMemorySize>
+								<maxMemorySize>2048m</maxMemorySize>
+								<maxStackSize>128m</maxStackSize>
+							</jvmSettings>
 						</program>
 						<program>
 							<mainClass>DataCrawler.Main_public</mainClass>

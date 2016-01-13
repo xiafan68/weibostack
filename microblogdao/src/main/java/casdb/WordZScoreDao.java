@@ -6,7 +6,8 @@ import java.util.List;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 
-import xiafan.util.Pair;
+import util.Pair;
+
 
 public class WordZScoreDao {
 

@@ -172,7 +172,7 @@ public class CassandraConn {
 				DBUtil.WORD_ZSCORE_TABLE));
 		// 用于记录每个单词的词频时序
 		executeCQL(String.format(
-				"create table IF NOT EXISTS  %s(word text, freq counter, tstime bigint, PRIMARY KEY(tstime, word))",
+				"create table IF NOT EXISTS  %s(word text, freq counter, tstime bigint, PRIMARY KEY(word,tstime))",
 				DBUtil.WORD_FREQ_TABLE));
 		executeCQL(String.format(
 				"create table IF NOT EXISTS  %s(crawltype text, freq counter, tstime bigint, PRIMARY KEY(crawltype, tstime))",

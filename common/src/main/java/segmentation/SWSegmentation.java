@@ -28,7 +28,7 @@ public class SWSegmentation extends ISegmentation {
 			points.add(new Pair<Integer, Integer>(point, value));
 			return;
 		}
-		int missedPoint = points.get(points.size() - 1).arg0 + 1;
+		int missedPoint = points.get(points.size() - 1).getKey() + 1;
 		for (; missedPoint < point; missedPoint++) {
 			points.add(new Pair<Integer, Integer>(missedPoint, 0));
 		}
@@ -65,14 +65,14 @@ public class SWSegmentation extends ISegmentation {
 					lastTry++;
 				}
 			}
-			if (points.size() == 1 && points.get(0).arg1 == 0) {
+			if (points.size() == 1 && points.get(0).getValue() == 0) {
 				points.clear();
 				break;
 			}
 			if (finish && !points.isEmpty()) {
 				lastTry = points.size() - 1;
 				fakePoint = true;
-				points.add(new Pair<Integer, Integer>(points.get(points.size() - 1).arg0 + 1, 0));
+				points.add(new Pair<Integer, Integer>(points.get(points.size() - 1).getKey() + 1, 0));
 			}
 		} while (finish && !points.isEmpty());
 	}
@@ -85,13 +85,13 @@ public class SWSegmentation extends ISegmentation {
 	private boolean newSeg(int endIdx, boolean finish) {
 		Pair<Integer, Integer> start = points.get(0);
 		Pair<Integer, Integer> last = points.get(endIdx);
-		float k = (last.arg1 - start.arg1) / ((float) (last.arg0 - start.arg0));
+		float k = (last.getValue() - start.getValue()) / ((float) (last.getKey() - start.getKey()));
 
 		float error = 0;
 		int i = 1;
 		for (; i < endIdx; i++) {
 			Pair<Integer, Integer> cur = points.get(i);
-			error += Math.abs(k * (cur.arg0 - start.arg0) + start.arg1 - cur.arg1);
+			error += Math.abs(k * (cur.getKey() - start.getKey()) + start.getValue() - cur.getValue());
 		}
 		if (error >= max_error) {
 			if (error >= 2 * max_error)
@@ -108,7 +108,7 @@ public class SWSegmentation extends ISegmentation {
 	public void end(int startIdx, int end) {
 		Pair<Integer, Integer> start = points.get(startIdx);
 		Pair<Integer, Integer> last = points.get(end);
-		Segment seg = new Segment(start.arg0, start.arg1, last.arg0, last.arg1);
+		Segment seg = new Segment(start.getKey(), start.getValue(), last.getKey(), last.getValue());
 		points.subList(startIdx, end).clear();
 
 		newSeg(pre, seg);
