@@ -16,3 +16,4 @@ cassdb=10.11.1.212
 
 gangliaHost=10.11.1.212
 gangliaPort=8649
+tokenURL=www

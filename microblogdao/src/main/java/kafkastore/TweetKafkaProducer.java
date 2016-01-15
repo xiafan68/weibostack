@@ -34,8 +34,10 @@ public class TweetKafkaProducer {
 	}
 
 	public void store(String topic, Status tweet) {
+		if (tweet == null || tweet.getMid() == null) {
+			return;
+		}
 		while (true) {
-
 			Future<RecordMetadata> future;
 			try {
 				future = producer.send(new ProducerRecord<byte[], byte[]>(topic, tweet.getMid().getBytes(),
