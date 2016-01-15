@@ -120,8 +120,9 @@ public class TweetConsumer {
 		int count = 0;
 		do {
 			try {
+				count++;
 				records = consumer.poll(1000);
-				if (++count % 20 == 0) {
+				if (count % 20 == 0) {
 					logger.info("looping " + count + " times, no results fetched!!!");
 				}
 			} catch (Exception ex) {
