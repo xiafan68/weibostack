@@ -97,6 +97,10 @@
 							<id>wordstats</id>
 						</program>
 						<program>
+							<mainClass>timeseries.RetweetStatsGen</mainClass>
+							<id>retweetstats</id>
+						</program>
+						<program>
 							<mainClass>server.TKSearchServer</mainClass>
 							<id>TKSearchServer</id>
 							<jvmSettings>

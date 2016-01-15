@@ -18,6 +18,9 @@ public class KafkaTopics {
 	// 更新转发序列
 	public static final String RTSERIES_GROUP = "rtseries_grp";
 
+	// 更新转发序列
+	public static final String RTSTATS_GROUP = "rtstats_grp";
+
 	// 对转发序列进行近似的分组，需要读取存放到RETWEET_TOPIC中的数据
 	public static final String RTSERIES_SEG_GROUP = "rtseg_grp";
 

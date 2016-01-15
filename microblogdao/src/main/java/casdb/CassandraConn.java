@@ -2,6 +2,7 @@ package casdb;
 
 import org.apache.log4j.Logger;
 
+import com.datastax.driver.core.BatchStatement;
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Host;
@@ -12,7 +13,9 @@ import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ProtocolVersion;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
+import com.datastax.driver.core.Statement;
 import com.datastax.driver.core.exceptions.InvalidQueryException;
+import com.datastax.driver.core.exceptions.SyntaxError;
 
 import casdb.DBUtil.StatusFieldValueInSpector;
 import casdb.DBUtil.UserFieldInSpector;
@@ -27,7 +30,7 @@ import weibo4j.model.User;
  *
  */
 public class CassandraConn {
-	private Logger logger = Logger.getLogger(CassandraConn.class);
+	private final Logger logger = Logger.getLogger(CassandraConn.class);
 	private Cluster cluster;
 	private Session session;
 
@@ -79,10 +82,28 @@ public class CassandraConn {
 	public void executeCQL(String cql) {
 		while (true) {
 			try {
+				logger.debug(cql);
 				session.execute(cql);
 				break;
 			} catch (Exception ex) {
 				logger.error(cql + "," + ex.getMessage());
+				session.close();
+				connectDB();
+			}
+		}
+	}
+
+	public void executeStmt(Statement bound) {
+		while (true) {
+			try {
+				if (bound instanceof BatchStatement) {
+					if (((BatchStatement) bound).size() == 0)
+						break;
+				}
+				session.execute(bound);
+				break;
+			} catch (Exception ex) {
+				logger.error(ex.getMessage() + ";sql:" + bound.toString());
 				session.close();
 				connectDB();
 			}
@@ -109,6 +130,9 @@ public class CassandraConn {
 				ret = session.execute(cql);
 				break;
 			} catch (Exception ex) {
+				if (ex instanceof SyntaxError) {
+					break;
+				}
 				logger.error(ex.getMessage() + ";sql:" + cql);
 				session.close();
 				connectDB();
@@ -177,6 +201,7 @@ public class CassandraConn {
 		executeCQL(String.format(
 				"create table IF NOT EXISTS  %s(crawltype text, freq counter, tstime bigint, PRIMARY KEY(crawltype, tstime))",
 				DBUtil.CRAWL_STATS));
+		RetweetStatsDao.init(this);
 	}
 
 	public void close() {

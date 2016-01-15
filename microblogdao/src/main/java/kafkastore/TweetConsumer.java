@@ -19,8 +19,8 @@ import org.apache.kafka.common.TopicPartition;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import weibo4j.StatusSerDer;
 import weibo4j.model.Status;
-import weibo4j.org.json.JSONObject;
 
 /**
  * 如何流式的构建微博的转发序列
@@ -191,8 +191,10 @@ public class TweetConsumer {
 				ret.put(record.topic(), new ArrayList<Status>());
 			}
 			try {
-				ret.get(record.topic())
-						.add(new Status(new JSONObject(new String(record.value(), TweetKafkaProducer.ENCODING))));
+				Status cur = StatusSerDer.fromJSON(new String(record.value(), TweetKafkaProducer.ENCODING));
+				if (cur != null) {
+					ret.get(record.topic()).add(cur);
+				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -204,7 +206,7 @@ public class TweetConsumer {
 		PropertyConfigurator.configure("conf/log4j.properties");
 		TweetConsumer consumer = new TweetConsumer();
 		consumer.open(Arrays.asList(KafkaTopics.VIP_UID_TOPIC, KafkaTopics.RTCRALW_STATE_TOPIC),
-				KafkaTopics.TWEET_STORE_GROUP, "localhost:9092", true);
+				KafkaTopics.TWEET_STORE_GROUP, "10.11.1.212:9092", true);
 
 		for (UserCrawlState state : consumer.nextCrawlerStates()) {
 			System.out.println(state);

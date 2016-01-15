@@ -32,11 +32,12 @@ public class TweetCassandraConsumer extends Thread {
 		while (true) {
 			for (Entry<String, List<Status>> topicData : consumer.nextStatus().entrySet()) {
 				for (Status cur : topicData.getValue()) {
-					System.out.println(cur);
-					tweetDao.putTweet(cur);
-					if (cur.getRetweetedStatus() != null) {
-						tweetDao.putTweet(cur.getRetweetedStatus());
-					}
+					System.err.println(cur);
+
+					// tweetDao.putTweet(cur);
+					// if (cur.getRetweetedStatus() != null) {
+					// tweetDao.putTweet(cur.getRetweetedStatus());
+					// }
 				}
 			}
 		}
@@ -55,7 +56,8 @@ public class TweetCassandraConsumer extends Thread {
 		CassandraConn conn = new CassandraConn();
 		conn.connect(set.valueOf("c").toString());// "127.0.0.1"
 		TweetConsumer consumer = new TweetConsumer();
-		consumer.open(Arrays.asList(KafkaTopics.RETWEET_TOPIC), "test", set.valueOf("k").toString(), true);// "localhost:9092"
+		consumer.open(Arrays.asList(KafkaTopics.RETWEET_TOPIC, KafkaTopics.TWEET_TOPIC), "test",
+				set.valueOf("k").toString(), true);// "localhost:9092"
 		TweetCassandraConsumer storer = new TweetCassandraConsumer(consumer, conn);
 		storer.start();
 	}
