@@ -14,6 +14,7 @@
 		<module>socialtsquery-client</module>
 		<module>../weibocrawler</module>
 		<module>../tksfront</module>
+		<module>../timeseries</module>
 		<module>distribution</module>
 		<module>common</module>
 	</modules>
