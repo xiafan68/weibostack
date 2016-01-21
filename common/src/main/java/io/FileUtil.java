@@ -14,6 +14,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.comparator.NameFileComparator;
 import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 
 public class FileUtil {
 	public static void mkdirs(String path) {
@@ -90,8 +91,8 @@ public class FileUtil {
 		if (dir.isDirectory()) {
 			NameFileComparator comp = new NameFileComparator();
 			RegexFileFilter filter = new RegexFileFilter(pattern);
-			List<File> dirFiles = comp.sort(new ArrayList<File>(FileUtils
-					.listFiles(dir, filter, FalseFileFilter.INSTANCE)));
+			List<File> dirFiles = comp
+					.sort(new ArrayList<File>(FileUtils.listFiles(dir, filter, TrueFileFilter.INSTANCE)));
 			File[] ret = new File[dirFiles.size()];
 			dirFiles.toArray(ret);
 			return ret;
@@ -108,8 +109,7 @@ public class FileUtil {
 		return ret;
 	}
 
-	public static DataOutputStream openDos(String file)
-			throws FileNotFoundException {
+	public static DataOutputStream openDos(String file) throws FileNotFoundException {
 		return new DataOutputStream(new FileOutputStream(file));
 	}
 
@@ -130,8 +130,7 @@ public class FileUtil {
 		FileUtil.delete(test);
 		test = new File("testdir");
 		System.out.println("should be false after delete:" + test.exists());
-		for (File file : FileUtil
-				.listDirOrFile("/home/xiafan/dataset/twitter/twitter_postings"))
+		for (File file : FileUtil.listDirOrFile("/home/xiafan/dataset/twitter/twitter_postings"))
 			System.out.println(file);
 	}
 }

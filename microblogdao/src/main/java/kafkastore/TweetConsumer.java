@@ -31,6 +31,9 @@ import weibo4j.model.Status;
 public class TweetConsumer {
 	private static final Logger logger = Logger.getLogger(TweetConsumer.class);
 	KafkaConsumer<byte[], byte[]> consumer;
+	List<String> topics;
+	String group;
+	String servers;
 
 	public TweetConsumer() {
 
@@ -45,6 +48,10 @@ public class TweetConsumer {
 	 * @param reset
 	 */
 	public void open(List<String> topics, String group, String servers, boolean reset) {
+		this.topics = topics;
+		this.group = group;
+		this.servers = servers;
+
 		Properties props = new Properties();
 		props.put("bootstrap.servers", servers);
 		props.put("group.id", group);
@@ -122,13 +129,22 @@ public class TweetConsumer {
 			try {
 				count++;
 				records = consumer.poll(1000);
-				if (count % 20 == 0) {
+				if (count % 100 == 0) {
 					logger.info("looping " + count + " times, no results fetched!!!");
+					consumer.commitSync();
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		} while (records == null || records.count() == 0 || count > 100);
+		try {
+			if (count >= 100) {
+				consumer.close();
+				open(topics, group, servers, false);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 
 		for (ConsumerRecord<byte[], byte[]> record : records) {
 			if (!ret.containsKey(record.topic())) {
