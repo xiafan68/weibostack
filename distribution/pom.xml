@@ -129,8 +129,8 @@
 							<mainClass>util.IndexLoader</mainClass>
 							<id>indexloader</id>
 							<jvmSettings>
-								<initialMemorySize>2048M</initialMemorySize>
-								<maxMemorySize>2048M</maxMemorySize>
+								<initialMemorySize>1248M</initialMemorySize>
+								<maxMemorySize>5048M</maxMemorySize>
 								<maxStackSize>128m</maxStackSize>
 							</jvmSettings>
 						</program>
