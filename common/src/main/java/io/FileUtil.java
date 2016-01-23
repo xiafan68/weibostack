@@ -114,8 +114,11 @@ public class FileUtil {
 	}
 
 	public static void main(String[] args) throws IOException {
-
-		markDel(new File("/Users/xiafan/Documents/lsmodata/datadir/0_0.data"));
+		for (File file : FileUtil.listDirOrFile("/home/xiafan/data/twitter/sortedsegs")) {
+			System.out.println(file.getName());
+		}
+		// markDel(new
+		// File("/Users/xiafan/Documents/lsmodata/datadir/0_0.data"));
 	}
 
 	private static void test() throws IOException {
