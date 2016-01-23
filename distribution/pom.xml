@@ -125,6 +125,15 @@
 							<mainClass>casdb.TweetCassandraConsumer</mainClass>
 							<id>tweetcassandraconsumer</id>
 						</program>
+						<program>
+							<mainClass>util.IndexLoader</mainClass>
+							<id>indexloader</id>
+							<jvmSettings>
+								<initialMemorySize>2048M</initialMemorySize>
+								<maxMemorySize>2048M</maxMemorySize>
+								<maxStackSize>128m</maxStackSize>
+							</jvmSettings>
+						</program>
 					</programs>
 				</configuration>
 				<executions>
