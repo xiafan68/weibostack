@@ -97,6 +97,10 @@
 							<id>wordstats</id>
 						</program>
 						<program>
+							<mainClass>timeseries.DumpStatusIntoKafka</mainClass>
+							<id>dumpstatusintokafka</id>
+						</program>
+						<program>
 							<mainClass>timeseries.RetweetStatsGen</mainClass>
 							<id>retweetstats</id>
 						</program>
