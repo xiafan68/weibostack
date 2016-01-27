@@ -138,6 +138,15 @@
 								<maxStackSize>128m</maxStackSize>
 							</jvmSettings>
 						</program>
+						<program>
+							<mainClass>expr.DiskBasedPerfTest</mainClass>
+							<id>perftest</id>
+							<jvmSettings>
+								<initialMemorySize>2048M</initialMemorySize>
+								<maxMemorySize>2048M</maxMemorySize>
+								<maxStackSize>128m</maxStackSize>
+							</jvmSettings>
+						</program>
 					</programs>
 				</configuration>
 				<executions>
