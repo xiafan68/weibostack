@@ -97,6 +97,10 @@
 							<id>wordstats</id>
 						</program>
 						<program>
+							<mainClass>timeseries.DumpStatusIntoKafka</mainClass>
+							<id>dumpstatusintokafka</id>
+						</program>
+						<program>
 							<mainClass>timeseries.RetweetStatsGen</mainClass>
 							<id>retweetstats</id>
 						</program>
@@ -131,6 +135,15 @@
 							<jvmSettings>
 								<initialMemorySize>1248M</initialMemorySize>
 								<maxMemorySize>5048M</maxMemorySize>
+								<maxStackSize>128m</maxStackSize>
+							</jvmSettings>
+						</program>
+						<program>
+							<mainClass>expr.DiskBasedPerfTest</mainClass>
+							<id>perftest</id>
+							<jvmSettings>
+								<initialMemorySize>2048M</initialMemorySize>
+								<maxMemorySize>2048M</maxMemorySize>
 								<maxStackSize>128m</maxStackSize>
 							</jvmSettings>
 						</program>
