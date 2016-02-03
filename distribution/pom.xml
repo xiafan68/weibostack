@@ -147,6 +147,15 @@
 								<maxStackSize>128m</maxStackSize>
 							</jvmSettings>
 						</program>
+						<program>
+							<mainClass>expr.ThroughputTest</mainClass>
+							<id>throughputtest</id>
+							<jvmSettings>
+								<initialMemorySize>4048M</initialMemorySize>
+								<maxMemorySize>4048M</maxMemorySize>
+								<maxStackSize>128m</maxStackSize>
+							</jvmSettings>
+						</program>
 					</programs>
 				</configuration>
 				<executions>
