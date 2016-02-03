@@ -134,9 +134,10 @@ public class TweetConsumer {
 					consumer.commitSync();
 				}
 			} catch (Exception ex) {
+				logger.error(ex.getMessage());
 				ex.printStackTrace();
 			}
-		} while (records == null || records.count() == 0 || count > 100);
+		} while (records == null || records.count() == 0 || count < 100);
 		try {
 			if (count >= 100) {
 				consumer.close();
@@ -156,6 +157,7 @@ public class TweetConsumer {
 					ret.get(record.topic()).add(data);
 			} catch (Exception ex) {
 				ex.printStackTrace();
+				logger.error(ex.getMessage());
 			}
 		}
 		return ret;

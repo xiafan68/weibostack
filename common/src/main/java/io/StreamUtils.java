@@ -8,15 +8,11 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class StreamUtils {
-	public static OutputStream outputStream(String path)
-			throws FileNotFoundException {
-		return new BufferedOutputStream(new DataOutputStream(
-				new FileOutputStream(path)));
+	public static OutputStream outputStream(String path) throws FileNotFoundException {
+		return new BufferedOutputStream(new DataOutputStream(new FileOutputStream(path)));
 	}
 
-	public static OutputStream outputStream(File path)
-			throws FileNotFoundException {
-		return new BufferedOutputStream(new DataOutputStream(
-				new FileOutputStream(path)));
+	public static OutputStream outputStream(File path) throws FileNotFoundException {
+		return new BufferedOutputStream(new DataOutputStream(new FileOutputStream(path)));
 	}
 }
