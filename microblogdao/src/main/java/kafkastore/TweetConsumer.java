@@ -142,6 +142,7 @@ public class TweetConsumer {
 			if (count >= 100) {
 				consumer.close();
 				open(topics, group, servers, false);
+				count = 0;
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -160,6 +161,7 @@ public class TweetConsumer {
 				logger.error(ex.getMessage());
 			}
 		}
+		count=0;
 		return ret;
 	}
 
