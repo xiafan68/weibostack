@@ -148,7 +148,7 @@
 							</jvmSettings>
 						</program>
 						<program>
-							<mainClass>expr.ThroughputTest</mainClass>
+							<mainClass>expr.ParaReadWriteTest</mainClass>
 							<id>throughputtest</id>
 							<jvmSettings>
 								<initialMemorySize>4048M</initialMemorySize>

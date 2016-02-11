@@ -1,5 +1,5 @@
 #!/bin/sh
-
+#throughput test, arg1 is the query seed of weibo, arg2 is the query seed of twitter
 SCRIPT=$(readlink -f "$0")
 # Absolute path this script is in, thus /home/user/bin
 SCRIPTPATH=$(dirname $(dirname "$SCRIPT"))
