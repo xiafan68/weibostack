@@ -41,6 +41,14 @@ struct TKeywordQuery {
 	5: QueryType type
 }
 
+struct TKeywordsQuery {
+	1: list<string> query,
+	2: i32 topk,
+	3: i32 startTime,
+	4: i32 endTime,
+	5: QueryType type
+}
+
 struct TweetTuple{
 	1: string content,
 	2: list<list<i32>> points
