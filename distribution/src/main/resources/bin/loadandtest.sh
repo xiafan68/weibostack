@@ -10,7 +10,12 @@ tqueryseed=$2
 odirP=$3
 
 
-function scaleTest(dataDir, lsmi, lsmo, odir) {
+function scaleTest()
+{
+    dataDir=$1
+    lsmi=$2
+    lsmo=$3
+    odir=$4
     idx=4
     while [ $idx -le 20 ] 
     do
@@ -37,9 +42,9 @@ function scaleTest(dataDir, lsmi, lsmo, odir) {
 dataDir="/home/xiafan/data/twitter/sortedsegs"
 t_lsmi="conf/twitter/scale/index_lsmi_twitter.conf"
 t_lsmo="conf/twitter/scale/index_lsmo_twitter.conf"
-scaleTest($dataDir, $t_lsmi, $t_lsmo, "${odirP}/twitter")
+$(scaleTest $dataDir $t_lsmi $t_lsmo "${odirP}/twitter")
 
 dataDir="/home/xiafan/data/weibo/sortedsegs"
 t_lsmi="conf/weibo/scale/index_lsmi_weibo.conf"
 t_lsmo="conf/weibo/scale/index_lsmo_weibo.conf"
-scaleTest($dataDir, $t_lsmi, $t_lsmo,"${odirP}/weibo")
+$(scaleTest $dataDir $t_lsmi $t_lsmo "${odirP}/weibo")
