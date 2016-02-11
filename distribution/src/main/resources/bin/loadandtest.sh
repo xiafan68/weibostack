@@ -10,7 +10,7 @@ tqueryseed=$2
 odirP=$3
 
 
-function scaleTest(dataDir, lsmi, lsmo, odir){
+function scaleTest(dataDir, lsmi, lsmo, odir) {
     idx=4
     while [ $idx -le 20 ] 
     do

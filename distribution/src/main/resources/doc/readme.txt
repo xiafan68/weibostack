@@ -18,3 +18,6 @@ nohup bin/retweetstats -c 10.11.1.212 -k 10.11.1.212:9092 -m rData/motion.txt -g
 
 nohup bin/retweetstats -c 127.0.0.1 -k 127.0.0.1:9092 -m rData/motion.txt -g 127.0.0.1:8649 -r&
 bin/kafka-topics.sh --zookeeper localhost:9092 --alter --topic rtsupdate --partitions 4
+
+
+bin/loadandtest.sh /home/xiafan/KuaiPan/dataset/time_series/nqueryseed.txt /home/xiafan/KuaiPan/dataset/twitter_expr/keywordsbycount/queryseed.txt /home/xiafan/expr/scale
