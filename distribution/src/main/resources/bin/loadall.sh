@@ -12,7 +12,7 @@ do
     echo "loading file ${conf}"
     #bin/indexloader -l conf/log4j-server2.properties -c $conf -d $dataFile
     fname=$(basename $conf)
-    bin/throughputtest -s$wseed -c $conf -d $dataFile -e ~/expr/weibo_throughput/$fname -s $1
+    bin/throughputtest -s $wseed -c $conf -d $dataFile -e ~/expr/weibo_throughput/$fname
 done
 
 dataFile="/home/xiafan/data/twitter/part20"
@@ -20,5 +20,5 @@ for conf in ${SCRIPTPATH}/conf/twitter/ttest/*
 do
     fname=$(basename $conf)
     #bin/indexloader -l conf/log4j-server2.properties -c $conf -d $dataFile
-    bin/throughputtest -s$tseed -c $conf -d $dataFile -e ~/expr/twitter_throughput/$fname -s $2
+    bin/throughputtest -s $tseed -c $conf -d $dataFile -e ~/expr/twitter_throughput/$fname
 done
