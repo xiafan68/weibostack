@@ -137,7 +137,7 @@ public class TweetConsumer {
 				logger.error(ex.getMessage());
 				ex.printStackTrace();
 			}
-		} while (records == null || records.count() == 0 || count < 100);
+		} while ((records == null || records.count() == 0) && count < 100);
 		try {
 			if (count >= 100) {
 				consumer.close();
@@ -161,7 +161,7 @@ public class TweetConsumer {
 				logger.error(ex.getMessage());
 			}
 		}
-		count=0;
+		count = 0;
 		return ret;
 	}
 

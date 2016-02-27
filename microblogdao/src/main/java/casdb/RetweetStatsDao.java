@@ -93,7 +93,7 @@ public class RetweetStatsDao {
 			conn.executeCQL(cql);
 		} else {
 			bStmt.get().add(new SimpleStatement(cql));
-			if (bStmt.get().size() > 200) {
+			if (bStmt.get().size() > 2) {
 				endBatch();
 				beginBatch();
 			}

@@ -39,8 +39,8 @@ public class CassandraConn {
 	public void connect(String node) {
 		cluster = Cluster.builder().withProtocolVersion(ProtocolVersion.V4).addContactPoint(node).build();
 		PoolingOptions options = cluster.getConfiguration().getPoolingOptions();
-		options.setCoreConnectionsPerHost(HostDistance.LOCAL, 1);
-		options.setMaxConnectionsPerHost(HostDistance.LOCAL, 10);
+		options.setCoreConnectionsPerHost(HostDistance.LOCAL, 10);
+		options.setMaxConnectionsPerHost(HostDistance.LOCAL, 100);
 		Metadata metadata = cluster.getMetadata();
 		System.out.printf("Connected to cluster: %s\n", metadata.getClusterName());
 		for (Host host : metadata.getAllHosts()) {
@@ -102,6 +102,8 @@ public class CassandraConn {
 				}
 				session.execute(bound);
 				break;
+			} catch (InvalidQueryException ex) {
+				logger.error(ex.getMessage() + ";sql:" + bound.toString());
 			} catch (Exception ex) {
 				logger.error(ex.getMessage() + ";sql:" + bound.toString());
 				session.close();
