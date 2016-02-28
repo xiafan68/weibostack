@@ -18,6 +18,23 @@
 		<module>distribution</module>
 		<module>common</module>
 	</modules>
+
+	<profiles>
+		<profile>
+			<id>server-build</id>
+			<activation>
+				<file>
+					<exists>../tweetstreaming/pom.xml</exists>
+				</file>
+			</activation>
+			<modules>
+				<module>tweetstreaming</module>
+				<module>socialtsquery</module>
+				<module>weibocrawler</module>
+			</modules>
+		</profile>
+	</profiles>
+
 	<dependencies>
 		<dependency>
 			<groupId>net.sf.jopt-simple</groupId>
