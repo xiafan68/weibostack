@@ -161,7 +161,6 @@ public class TweetConsumer {
 				logger.error(ex.getMessage());
 			}
 		}
-		count = 0;
 		return ret;
 	}
 
