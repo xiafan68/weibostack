@@ -28,9 +28,9 @@
 				</file>
 			</activation>
 			<modules>
-				<module>tweetstreaming</module>
-				<module>socialtsquery</module>
-				<module>weibocrawler</module>
+				<module>../tweetstreaming</module>
+				<module>../socialtsquery</module>
+				<module>../weibocrawler</module>
 			</modules>
 		</profile>
 	</profiles>

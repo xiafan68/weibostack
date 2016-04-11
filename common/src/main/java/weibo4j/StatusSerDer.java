@@ -1,6 +1,5 @@
 package weibo4j;
 
-import java.io.StringWriter;
 import java.util.Date;
 
 import com.google.gson.Gson;
@@ -9,7 +8,6 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;
-import net.sf.json.util.JSONUtils;
 import weibo4j.model.Source;
 import weibo4j.model.Status;
 import weibo4j.model.Visible;
