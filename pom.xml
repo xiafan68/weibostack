@@ -30,7 +30,7 @@
 			<modules>
 				<module>../tweetstreaming</module>
 				<module>../socialtsquery</module>
-				<module>../fanxia.weibocrawler</module>
+				<module>../weibocrawler</module>
 			</modules>
 		</profile>
 	</profiles>
