@@ -114,15 +114,15 @@
 							</jvmSettings>
 						</program>
 						<program>
-							<mainClass>DataCrawler.Main_public</mainClass>
+							<mainClass>fanxia.weibocrawler.Main_public</mainClass>
 							<id>publiccrawler</id>
 						</program>
 						<program>
-							<mainClass>DataCrawler.Main_repost</mainClass>
+							<mainClass>fanxia.weibocrawler.Main_repost</mainClass>
 							<id>repostcrawler</id>
 						</program>
 						<program>
-							<mainClass>DataCrawler.KafkaJobInit</mainClass>
+							<mainClass>fanxia.weibocrawler.KafkaJobInit</mainClass>
 							<id>KafkaJobInit</id>
 						</program>
 						<program>

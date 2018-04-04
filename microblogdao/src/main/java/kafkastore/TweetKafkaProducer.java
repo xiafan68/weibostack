@@ -7,6 +7,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import kafkastore.model.RepostCrawlState;
+import kafkastore.model.TimeSeriesUpdateState;
+import kafkastore.model.UserCrawlState;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;

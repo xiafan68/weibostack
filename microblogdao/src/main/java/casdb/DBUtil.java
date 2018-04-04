@@ -11,8 +11,8 @@ import com.datastax.driver.core.ColumnDefinitions.Definition;
 import com.datastax.driver.core.DataType;
 import com.datastax.driver.core.Row;
 
-import kafkastore.RepostCrawlState;
-import kafkastore.UserCrawlState;
+import kafkastore.model.RepostCrawlState;
+import kafkastore.model.UserCrawlState;
 import weibo4j.WeiboException;
 import weibo4j.model.Status;
 import weibo4j.model.User;

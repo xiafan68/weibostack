@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import kafkastore.model.RepostCrawlState;
+import kafkastore.model.TimeSeriesUpdateState;
+import kafkastore.model.UserCrawlState;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;

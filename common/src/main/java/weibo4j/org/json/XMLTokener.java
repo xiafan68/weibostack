@@ -209,7 +209,7 @@ public class XMLTokener extends JSONTokener {
 
 
     /**
-     * Get the next XML DataCrawler.Token. These tokens are found inside of angle
+     * Get the next XML fanxia.weibocrawler.token. These tokens are found inside of angle
      * brackets. It may be one of these characters: <code>/ > = ! ?</code> or it
      * may be a string wrapped in single quotes or double quotes, or it may be a
      * name.

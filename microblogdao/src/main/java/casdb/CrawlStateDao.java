@@ -11,8 +11,8 @@ import com.datastax.driver.core.Row;
 
 import casdb.DBUtil.PrepareStatementBounder;
 import casdb.DBUtil.StatusFieldInSpector;
-import kafkastore.RepostCrawlState;
-import kafkastore.UserCrawlState;
+import kafkastore.model.RepostCrawlState;
+import kafkastore.model.UserCrawlState;
 
 public class CrawlStateDao {
 
