@@ -55,8 +55,6 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>appassembler-maven-plugin</artifactId>
 				<configuration>
-					<copyResourceDirectory>true</copyResourceDirectory>
-					<resourceDirectory></resourceDirectory>
 					<!-- Set the target configuration directory to be used in the bin scripts -->
 					<configurationDirectory>conf</configurationDirectory>
 					<!-- Copy the contents from "/src/main/config" to the target configuration 

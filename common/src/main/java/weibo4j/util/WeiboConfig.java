@@ -10,6 +10,7 @@ public class WeiboConfig {
 	static{
 		try {
 			props.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties"));
+			System.out.println(props.toString());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
