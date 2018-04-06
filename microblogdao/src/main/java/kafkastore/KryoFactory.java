@@ -4,6 +4,9 @@ import java.sql.Date;
 
 import com.esotericsoftware.kryo.Kryo;
 
+import kafkastore.model.RepostCrawlState;
+import kafkastore.model.TimeSeriesUpdateState;
+import kafkastore.model.UserCrawlState;
 import weibo4j.model.Source;
 import weibo4j.model.Status;
 import weibo4j.model.User;

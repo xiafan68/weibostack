@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import kafkastore.model.RepostCrawlState;
+import kafkastore.model.TimeSeriesUpdateState;
+import kafkastore.model.UserCrawlState;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -19,7 +22,6 @@ import org.apache.kafka.common.TopicPartition;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import weibo4j.StatusSerDer;
 import weibo4j.model.Status;
 
 /**
@@ -211,7 +213,7 @@ public class TweetConsumer {
 				ret.put(record.topic(), new ArrayList<Status>());
 			}
 			try {
-				Status cur = StatusSerDer.fromJSON(new String(record.value(), TweetKafkaProducer.ENCODING));
+				Status cur = new Status(new String(record.value(), TweetKafkaProducer.ENCODING));
 				if (cur != null) {
 					ret.get(record.topic()).add(cur);
 				}

@@ -12,7 +12,7 @@ import com.datastax.driver.core.Row;
 
 import casdb.DBUtil.StatusFieldInSpector;
 import casdb.DBUtil.StatusFieldValueInSpector;
-import kafkastore.TimeSeriesUpdateState;
+import kafkastore.model.TimeSeriesUpdateState;
 import util.DateUtil;
 import weibo4j.model.Status;
 
