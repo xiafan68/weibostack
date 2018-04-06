@@ -4,6 +4,7 @@
 **/library
 **/.idea
 *~
+.DS_store
 */.classpath
 */.project
 */.settings
@@ -16,7 +17,7 @@ OCBA_Backend/config/dict
 OCBA_Backend/rData
 OCBA_Backend/Tokens
 *.class
-
+*.iml
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

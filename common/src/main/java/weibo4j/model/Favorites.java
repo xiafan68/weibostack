@@ -4,20 +4,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import weibo4j.WeiboException;
 import weibo4j.http.Response;
 import weibo4j.org.json.JSONArray;
 import weibo4j.org.json.JSONException;
 import weibo4j.org.json.JSONObject;
 
-public class Favorites extends WeiboResponse implements java.io.Serializable{
+public class Favorites extends WeiboResponse {
 
 	private static final long serialVersionUID = 3355536191107298448L;
 	private Date favoritedTime;                        //添加收藏的时间
 	private Status status;                             //收藏的status
 	private List<FavoritesTag> tags;                   //收藏的tags
 	private static int totalNumber;
-	public Favorites(Response res) throws WeiboException, WeiboException, weibo4j.model.WeiboException{
+	public Favorites(Response res) throws WeiboException{
 		super(res);
 		JSONObject json = null;
 		try {
@@ -29,16 +28,16 @@ public class Favorites extends WeiboResponse implements java.io.Serializable{
 			if(!json.isNull("tags")){
 				JSONArray list = json.getJSONArray("tags");
 				int size = list.length();
-				List<FavoritesTag> tag = new ArrayList<FavoritesTag>(size);
-				for (int i = 0;i< size;i++){
-					tag.add(new FavoritesTag(list.getJSONObject(i)));
+				tags = new ArrayList<FavoritesTag>(size);
+				for (int i = 0; i < size; i++){
+					tags.add(new FavoritesTag(list.getJSONObject(i)));
 				}
 			}
 		} catch (JSONException je) {
 			throw new WeiboException(je.getMessage() + ":" + json.toString(), je);
 		}
 	} 
-	Favorites(JSONObject json) throws WeiboException, JSONException, weibo4j.model.WeiboException{
+	Favorites(JSONObject json) throws WeiboException, JSONException{
 		favoritedTime = parseDate(json.getString("favorited_time"), "EEE MMM dd HH:mm:ss z yyyy");
 		if(!json.isNull("status")){
 			status = new Status(json.getJSONObject("status"));
@@ -47,13 +46,13 @@ public class Favorites extends WeiboResponse implements java.io.Serializable{
 			JSONArray list = json.getJSONArray("tags");
 			int size = list.length();
 			tags = new ArrayList<FavoritesTag>(size);
-			for (int i = 0;i< size;i++){
+			for (int i = 0; i < size; i++){
 				tags.add(new FavoritesTag(list.getJSONObject(i)));
 			}
 		}
 
 	}
-	public static List<Favorites> constructFavorites(Response res) throws WeiboException, weibo4j.model.WeiboException{
+	public static List<Favorites> constructFavorites(Response res) throws WeiboException{
 		try {
 			JSONArray list = res.asJSONObject().getJSONArray("favorites");
 			int size = list.length();

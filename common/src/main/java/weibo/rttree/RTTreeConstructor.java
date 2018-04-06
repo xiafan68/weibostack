@@ -33,7 +33,7 @@ public class RTTreeConstructor {
 	private static final String RT_TAG = "//@";
 	public static Pattern RT_PATTERN = Pattern.compile("(//[ ]*@([^:：]+)[:：])");
 
-	public static Pattern TWITTER_RT_PATTERN = Pattern.compile("(rt|RT|Rt|Retweet|reweet|//)[^@]*@([^:： ]+)[:： ]");
+	public static Pattern TWITTER_RT_PATTERN = Pattern.compile("(rt|RT|Rt|Retweet|retweet|//)[^@]*@([^:： ]+)[:： ]");
 
 	public static TrieTree<Tweet> parse(Tweet oT, List<Tweet> tweets) {
 

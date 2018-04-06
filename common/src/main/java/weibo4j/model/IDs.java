@@ -40,13 +40,12 @@ import weibo4j.org.json.JSONObject;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @editor SinaWeibo
  */
-
 public class IDs extends WeiboResponse {
     private long[] ids;           //ids
     private long previousCursor;  //当前cursor
     private long nextCursor;      //下一个cursor
     private static final long serialVersionUID = -6585026560164704953L;
-    /*package*/ public IDs(Response res,Weibo w) throws WeiboException {
+    /*package*/ IDs(Response res,Weibo w) throws WeiboException {
         super(res);
         if("[]\n".equals(res.asString())){
         	previousCursor=0;
@@ -77,16 +76,7 @@ public class IDs extends WeiboResponse {
     public long[] getIDs() {
         return ids;
     }
-    public long getSize()
-    {
-    	long size = 0;
-    	for(long id : this.getIDs())
-    	{
-    		size ++;
-    	}
-    	return size;
-    	
-    }
+
     /**
      *
      * @since weibo4j-V2 1.0.0

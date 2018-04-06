@@ -65,7 +65,6 @@ public class Trends extends WeiboResponse implements Comparable<Trends> {
 	/* package */
 	public static List<Trends> constructTrendsList(Response res)
 			throws WeiboException {
-		System.out.print(res.asString());
 		JSONObject json = res.asJSONObject();
 		List<Trends> trends;
 		try {

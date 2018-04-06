@@ -14,7 +14,7 @@ public class WeiboConfig {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-	}
+		}
 	}
 	public static String getValue(String key){
 		return props.getProperty(key);
