@@ -15,6 +15,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
 import weibo4j.model.Status;
+import weibo4j.org.json.JSONObject;
 
 /**
  * 用于将爬取到的tweet发布到kafka中去
@@ -44,7 +45,7 @@ public class TweetKafkaProducer {
 			Future<RecordMetadata> future;
 			try {
 				future = producer.send(new ProducerRecord<byte[], byte[]>(topic, tweet.getMid().getBytes(),
-						tweet.toString().getBytes(ENCODING)));
+						new JSONObject(tweet).toString().getBytes(ENCODING)));
 			} catch (UnsupportedEncodingException e1) {
 				throw new RuntimeException(e1);
 			}

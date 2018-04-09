@@ -45,13 +45,13 @@ import weibo4j.org.json.JSONException;
 public class HttpClient implements java.io.Serializable {
 
 	private static final long serialVersionUID = -176092625883595547L;
-	private static final int OK 				   = 200;						// OK: Success!
-	private static final int NOT_MODIFIED 		   = 304;			// Not Modified: There was no new data to return.
-	private static final int BAD_REQUEST 		   = 400;				// Bad Request: The request was invalid.  An accompanying error message will explain why. This is the status code will be returned during rate limiting.
-	private static final int NOT_AUTHORIZED 	   = 401;			// Not Authorized: Authentication credentials were missing or incorrect.
-	private static final int FORBIDDEN 			   = 403;				// Forbidden: The request is understood, but it has been refused.  An accompanying error message will explain why.
-	private static final int NOT_FOUND             = 404;				// Not Found: The URI requested is invalid or the resource requested, such as a user, does not exists.
-	private static final int NOT_ACCEPTABLE        = 406;		// Not Acceptable: Returned by the Search API when an invalid format is specified in the request.
+	private static final int OK 				   = 200;// OK: Success!
+	private static final int NOT_MODIFIED 		   = 304;// Not Modified: There was no new data to return.
+	private static final int BAD_REQUEST 		   = 400;// Bad Request: The request was invalid.  An accompanying error message will explain why. This is the status code will be returned during rate limiting.
+	private static final int NOT_AUTHORIZED 	   = 401;// Not Authorized: Authentication credentials were missing or incorrect.
+	private static final int FORBIDDEN 			   = 403;// Forbidden: The request is understood, but it has been refused.  An accompanying error message will explain why.
+	private static final int NOT_FOUND             = 404;// Not Found: The URI requested is invalid or the resource requested, such as a user, does not exists.
+	private static final int NOT_ACCEPTABLE        = 406;// Not Acceptable: Returned by the Search API when an invalid format is specified in the request.
 	private static final int INTERNAL_SERVER_ERROR = 500;// Internal Server Error: Something is broken.  Please post to the group so the Weibo team can investigate.
 	private static final int BAD_GATEWAY           = 502;// Bad Gateway: Weibo is down or being upgraded.
 	private static final int SERVICE_UNAVAILABLE   = 503;// Service Unavailable: The Weibo servers are up, but overloaded with requests. Try again later. The search and trend methods use this to indicate when you are being rate limited.
@@ -60,7 +60,6 @@ public class HttpClient implements java.io.Serializable {
 	private int proxyPort = Configuration.getProxyPort();
 	private String proxyAuthUser = Configuration.getProxyUser();
 	private String proxyAuthPassword = Configuration.getProxyPassword();
-	private String token;
 
 	public String getProxyHost() {
 		return proxyHost;
@@ -119,11 +118,6 @@ public class HttpClient implements java.io.Serializable {
 				.getProxyPassword(proxyAuthPassword);
 	}
 
-	public String setToken(String token) {
-		this.token = token;
-		return this.token;
-	}
-
 	private final static boolean DEBUG = Configuration.getDebug();
 	static Logger log = Logger.getLogger(HttpClient.class.getName());
 	org.apache.commons.httpclient.HttpClient client = null;
@@ -132,8 +126,7 @@ public class HttpClient implements java.io.Serializable {
 	private int maxSize;
 
 	public HttpClient() {
-		// change timeout to 2s avoid block thread-pool (Tim)
-		this(150, 2000, 2000, 1024 * 1024);
+		this(150, 30000, 30000, 1024 * 1024);
 	}
 
 	public HttpClient(int maxConPerHost, int conTimeOutMs, int soTimeOutMs,
@@ -141,7 +134,6 @@ public class HttpClient implements java.io.Serializable {
 		connectionManager = new MultiThreadedHttpConnectionManager();
 		HttpConnectionManagerParams params = connectionManager.getParams();
 		params.setDefaultMaxConnectionsPerHost(maxConPerHost);
-		
 		params.setConnectionTimeout(conTimeOutMs);
 		params.setSoTimeout(soTimeOutMs);
 
@@ -183,13 +175,13 @@ public class HttpClient implements java.io.Serializable {
 	 * 
 	 */
 
-	public Response get(String url) throws WeiboException {
+	public Response get(String url, String token) throws WeiboException {
 
-		return get(url, new PostParameter[0]);
+		return get(url, new PostParameter[0], token);
 
 	}
 
-	public Response get(String url, PostParameter[] params)
+	public Response get(String url, PostParameter[] params, String token)
 			throws WeiboException {
 		log("Request:");
 		log("GET:" + url);
@@ -202,11 +194,11 @@ public class HttpClient implements java.io.Serializable {
 			}
 		}
 		GetMethod getmethod = new GetMethod(url);
-		return httpRequest(getmethod);
+		return httpRequest(getmethod, token);
 
 	}
 
-	public Response get(String url, PostParameter[] params, Paging paging)
+	public Response get(String url, PostParameter[] params, Paging paging, String token)
 			throws WeiboException {
 		if (null != paging) {
 			List<PostParameter> pagingParams = new ArrayList<PostParameter>(4);
@@ -252,9 +244,9 @@ public class HttpClient implements java.io.Serializable {
 					}
 				}
 			}
-			return get(url, newparams);
+			return get(url, newparams, token);
 		} else {
-			return get(url, params);
+			return get(url, params, token);
 		}
 	}
 
@@ -262,7 +254,7 @@ public class HttpClient implements java.io.Serializable {
 	 * 处理http deletemethod请求
 	 */
 
-	public Response delete(String url, PostParameter[] params)
+	public Response delete(String url, PostParameter[] params, String token)
 			throws WeiboException {
 		if (0 != params.length) {
 			String encodedParams = HttpClient.encodeParameters(params);
@@ -273,7 +265,7 @@ public class HttpClient implements java.io.Serializable {
 			}
 		}
 		DeleteMethod deleteMethod = new DeleteMethod(url);
-		return httpRequest(deleteMethod);
+		return httpRequest(deleteMethod, token);
 
 	}
 
@@ -282,14 +274,14 @@ public class HttpClient implements java.io.Serializable {
 	 * 
 	 */
 
-	public Response post(String url, PostParameter[] params)
+	public Response post(String url, PostParameter[] params, String token)
 			throws WeiboException {
-		return post(url, params, true);
+		return post(url, params, true, token);
 
 	}
 
 	public Response post(String url, PostParameter[] params,
-			Boolean WithTokenHeader) throws WeiboException {
+			Boolean WithTokenHeader, String token) throws WeiboException {
 		log("Request:");
 		log("POST" + url);
 		PostMethod postMethod = new PostMethod(url);
@@ -298,11 +290,7 @@ public class HttpClient implements java.io.Serializable {
 		}
 		HttpMethodParams param = postMethod.getParams();
 		param.setContentCharset("UTF-8");
-		if (WithTokenHeader) {
-			return httpRequest(postMethod);
-		} else {
-			return httpRequest(postMethod, WithTokenHeader);
-		}
+		return httpRequest(postMethod, WithTokenHeader, token);
 	}
 
 	/**
@@ -310,7 +298,7 @@ public class HttpClient implements java.io.Serializable {
 	 * 
 	 */
 	public Response multPartURL(String url, PostParameter[] params,
-			ImageItem item) throws WeiboException {
+			ImageItem item, String token) throws WeiboException {
 		PostMethod postMethod = new PostMethod(url);
 		try {
 			Part[] parts = null;
@@ -330,7 +318,8 @@ public class HttpClient implements java.io.Serializable {
 			}
 			postMethod.setRequestEntity(new MultipartRequestEntity(parts,
 					postMethod.getParams()));
-			return httpRequest(postMethod);
+			
+			return httpRequest(postMethod, token);
 
 		} catch (Exception ex) {
 			throw new WeiboException(ex.getMessage(), ex, -1);
@@ -338,7 +327,7 @@ public class HttpClient implements java.io.Serializable {
 	}
 
 	public Response multPartURL(String fileParamName, String url,
-			PostParameter[] params, File file, boolean authenticated)
+			PostParameter[] params, File file, boolean authenticated, String token)
 			throws WeiboException {
 		PostMethod postMethod = new PostMethod(url);
 		try {
@@ -363,17 +352,17 @@ public class HttpClient implements java.io.Serializable {
 
 			postMethod.setRequestEntity(new MultipartRequestEntity(parts,
 					postMethod.getParams()));
-			return httpRequest(postMethod);
+			return httpRequest(postMethod, token);
 		} catch (Exception ex) {
 			throw new WeiboException(ex.getMessage(), ex, -1);
 		}
 	}
 
-	public Response httpRequest(HttpMethod method) throws WeiboException {
-		return httpRequest(method, true);
+	public Response httpRequest(HttpMethod method, String token) throws WeiboException {
+		return httpRequest(method, true, token);
 	}
 
-	public Response httpRequest(HttpMethod method, Boolean WithTokenHeader)
+	public Response httpRequest(HttpMethod method, Boolean WithTokenHeader, String token)
 			throws WeiboException {
 		InetAddress ipaddr;
 		int responseCode = -1;
@@ -407,10 +396,9 @@ public class HttpClient implements java.io.Serializable {
 			Response response = new Response();
 			response.setResponseAsString(method.getResponseBodyAsString());
 			log(response.toString() + "\n");
-			//System.out.println("response ok");
+
 			if (responseCode != OK)
 			{
-			    //return null;
 				try {
 					throw new WeiboException(getCause(responseCode),
 							response.asJSONObject(), method.getStatusCode());
@@ -418,12 +406,9 @@ public class HttpClient implements java.io.Serializable {
 					e.printStackTrace();
 				}
 			}
-			//System.out.println("response failed");
 			return response;
 
 		} catch (IOException ioe) {
-		    //System.err.println("yes1");
-		    //return null;
 			throw new WeiboException(ioe.getMessage(), ioe, responseCode);
 		} finally {
 			method.releaseConnection();
@@ -513,4 +498,6 @@ public class HttpClient implements java.io.Serializable {
 		}
 		return statusCode + ":" + cause;
 	}
+
+	
 }

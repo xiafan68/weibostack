@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import weibo4j.WeiboException;
 import weibo4j.http.Response;
 import weibo4j.org.json.JSONArray;
 import weibo4j.org.json.JSONException;
@@ -41,165 +40,134 @@ import weibo4j.org.json.JSONObject;
 /**
  * A data class representing Basic user information element
  */
-public class User extends WeiboResponse implements java.io.Serializable {
+public class User extends WeiboResponse {
 
 	private static final long serialVersionUID = -332738032648843482L;
-	private String id; // 用户UID
-	private String screenName; // 微博昵称
-	private String name; // 友好显示名称，如Bill Gates,名称中间的空格正常显示(此特性暂不支持)
-	private int province; // 省份编码（参考省份编码表）
-	private int city; // 城市编码（参考城市编码表）
-	private String location; // 地址
-	private String description; // 个人描述
-	private String url; // 用户博客地址
-	private String profileImageUrl; // 自定义图像
-	private String userDomain; // 用户个性化URL
-	private String gender; // 性别,m--男，f--女,n--未知
-	private int followersCount; // 粉丝数
-	private int friendsCount; // 关注数
-	private int statusesCount; // 微博数
-	private int favouritesCount; // 收藏数
-	private Date createdAt; // 创建时间
-	private boolean following; // 保留字段,是否已关注(此特性暂不支持)
-	private boolean verified; // 加V标示，是否微博认证用户
-	private int verifiedType; // 认证类型
-	private boolean allowAllActMsg; // 是否允许所有人给我发私信
-	private boolean allowAllComment; // 是否允许所有人对我的微博进行评论
-	private boolean followMe; // 此用户是否关注我
-	private String avatarLarge; // 大头像地址
-	private int onlineStatus; // 用户在线状态
-	private Status status = null; // 用户最新一条微博
-	private int biFollowersCount; // 互粉数
-	private String remark; // 备注信息，在查询用户关系时提供此字段。
-	private String lang; // 用户语言版本
-	private String verifiedReason; // 认证原因
-	private String weihao; // 微號
+	private String id;                      //用户UID
+	private String screenName;            //微博昵称
+	private String name;                  //友好显示名称，如Bill Gates,名称中间的空格正常显示(此特性暂不支持)
+	private int province;                 //省份编码（参考省份编码表）
+	private int city;                     //城市编码（参考城市编码表）
+	private String location;              //地址
+	private String description;           //个人描述
+	private String url;                   //用户博客地址
+	private String profileImageUrl;       //自定义图像
+	private String userDomain;            //用户个性化URL
+	private String gender;                //性别,m--男，f--女,n--未知
+	private int followersCount;           //粉丝数
+	private int friendsCount;             //关注数
+	private int statusesCount;            //微博数
+	private int favouritesCount;          //收藏数
+	private Date createdAt;               //创建时间
+	private boolean following;            //保留字段,是否已关注(此特性暂不支持)
+	private boolean verified;             //加V标示，是否微博认证用户
+	private int verifiedType;             //认证类型
+	private boolean allowAllActMsg;       //是否允许所有人给我发私信
+	private boolean allowAllComment;      //是否允许所有人对我的微博进行评论
+	private boolean followMe;             //此用户是否关注我
+	private String avatarLarge;           //大头像地址
+	private int onlineStatus;             //用户在线状态
+	private Status status = null;         //用户最新一条微博
+	private int biFollowersCount;         //互粉数
+	private String remark;                //备注信息，在查询用户关系时提供此字段。
+	private String lang;                  //用户语言版本
+	private String verifiedReason;		  //认证原因
+	private String weihao;				  //微號
 	private String statusId;
-
 	public String getVerified_reason() {
 		return verifiedReason;
 	}
-
 	public void setVerified_reason(String verifiedReason) {
 		this.verifiedReason = verifiedReason;
 	}
-
 	public void setId(String id) {
 		this.id = id;
 	}
-
 	public void setScreenName(String screenName) {
 		this.screenName = screenName;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public void setProvince(int province) {
 		this.province = province;
 	}
-
 	public void setCity(int city) {
 		this.city = city;
 	}
-
 	public void setLocation(String location) {
 		this.location = location;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
 	public void setProfileImageUrl(String profileImageUrl) {
 		this.profileImageUrl = profileImageUrl;
 	}
-
 	public void setUserDomain(String userDomain) {
 		this.userDomain = userDomain;
 	}
-
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-
 	public void setFollowersCount(int followersCount) {
 		this.followersCount = followersCount;
 	}
-
 	public void setFriendsCount(int friendsCount) {
 		this.friendsCount = friendsCount;
 	}
-
 	public void setStatusesCount(int statusesCount) {
 		this.statusesCount = statusesCount;
 	}
-
 	public void setFavouritesCount(int favouritesCount) {
 		this.favouritesCount = favouritesCount;
 	}
-
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-
 	public void setFollowing(boolean following) {
 		this.following = following;
 	}
-
 	public void setVerified(boolean verified) {
 		this.verified = verified;
 	}
-
 	public void setVerifiedType(int verifiedType) {
 		this.verifiedType = verifiedType;
 	}
-
 	public void setAllowAllActMsg(boolean allowAllActMsg) {
 		this.allowAllActMsg = allowAllActMsg;
 	}
-
 	public void setAllowAllComment(boolean allowAllComment) {
 		this.allowAllComment = allowAllComment;
 	}
-
 	public void setFollowMe(boolean followMe) {
 		this.followMe = followMe;
 	}
-
 	public void setAvatarLarge(String avatarLarge) {
 		this.avatarLarge = avatarLarge;
 	}
-
 	public void setOnlineStatus(int onlineStatus) {
 		this.onlineStatus = onlineStatus;
 	}
-
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
 	public void setBiFollowersCount(int biFollowersCount) {
 		this.biFollowersCount = biFollowersCount;
 	}
-
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
 	public void setLang(String lang) {
 		this.lang = lang;
 	}
-
+	
 	public String getWeihao() {
 		return weihao;
 	}
-
 	public void setWeihao(String weihao) {
 		this.weihao = weihao;
 	}
@@ -207,117 +175,54 @@ public class User extends WeiboResponse implements java.io.Serializable {
 	public String getVerifiedReason() {
 		return verifiedReason;
 	}
-
 	public void setVerifiedReason(String verifiedReason) {
 		this.verifiedReason = verifiedReason;
 	}
-
 	public String getStatusId() {
 		return statusId;
 	}
-
 	public void setStatusId(String statusId) {
 		this.statusId = statusId;
 	}
-
 	public String getUrl() {
 		return url;
 	}
-
 	public String getProfileImageUrl() {
 		return profileImageUrl;
 	}
-
 	public int getVerifiedType() {
 		return verifiedType;
 	}
-
 	public boolean isAllowAllActMsg() {
 		return allowAllActMsg;
 	}
-
 	public boolean isAllowAllComment() {
 		return allowAllComment;
 	}
-
 	public boolean isFollowMe() {
 		return followMe;
 	}
-
 	public String getAvatarLarge() {
 		return avatarLarge;
 	}
-
 	public int getOnlineStatus() {
 		return onlineStatus;
 	}
-
 	public int getBiFollowersCount() {
 		return biFollowersCount;
 	}
-
-	public User() {
-
-	}
-
-	/* package */public User(net.sf.json.JSONObject json) throws WeiboException, weibo4j.model.WeiboException {
+	/*package*/public User(JSONObject json) throws WeiboException {
 		super();
 		init(json);
 	}
-
-	// add by xiafan
-	private void init(net.sf.json.JSONObject json) throws WeiboException, WeiboException, weibo4j.model.WeiboException {
-		if (json != null) {
-			try {
-				id = json.getString("id");
-				screenName = json.getString("screenName");
-				name = json.getString("name");
-				province = json.getInt("province");
-				city = json.getInt("city");
-				location = json.getString("location");
-				description = json.getString("description");
-				url = json.getString("url");
-				profileImageUrl = json.getString("profileImageUrl");
-				userDomain = json.getString("userDomain");
-				gender = json.getString("gender");
-				followersCount = json.getInt("followersCount");
-				friendsCount = json.getInt("friendsCount");
-				favouritesCount = json.getInt("favouritesCount");
-				statusesCount = json.getInt("statusesCount");
-				if (json.getString("createdAt") != null)
-					createdAt = new Date(Long.parseLong(json.getString("createdAt")));
-				following = getBoolean("following", json);
-				verified = getBoolean("verified", json);
-				verifiedType = json.getInt("verifiedType");
-				verifiedReason = json.getString("verifiedReason");
-				allowAllActMsg = json.getBoolean("allowAllActMsg");
-				allowAllComment = json.getBoolean("allowAllComment");
-				followMe = json.getBoolean("followMe");
-				avatarLarge = json.getString("avatarLarge");
-				onlineStatus = json.getInt("onlineStatus");
-				statusId = json.getString("statusId");
-				biFollowersCount = json.getInt("biFollowersCount");
-				if (!json.getString("remark").isEmpty()) {
-					remark = json.getString("remark");
-				}
-				lang = json.getString("lang");
-				weihao = json.getString("weihao");
-				if (json.getJSONObject("status") != null && !json.getJSONObject("status").isNullObject()) {
-					status = new Status(json.getJSONObject("status"));
-				}
-			} catch (JSONException jsone) {
-				throw new WeiboException(jsone.getMessage() + ":" + json.toString(), jsone);
-			}
-		}
+	
+	public User(Response res ) throws WeiboException {
+		super(res);
+		init(res.asJSONObject());
 	}
 
-	/* package */public User(JSONObject json) throws WeiboException, weibo4j.model.WeiboException {
-		super();
-		init(json);
-	}
-
-	private void init(JSONObject json) throws WeiboException, WeiboException, weibo4j.model.WeiboException {
-		if (json != null) {
+	private void init(JSONObject json) throws WeiboException {
+		if(json!=null){
 			try {
 				id = json.getString("id");
 				screenName = json.getString("screen_name");
@@ -334,19 +239,19 @@ public class User extends WeiboResponse implements java.io.Serializable {
 				friendsCount = json.getInt("friends_count");
 				favouritesCount = json.getInt("favourites_count");
 				statusesCount = json.getInt("statuses_count");
-				createdAt = parseDate(json.getString("createdAt"), "EEE MMM dd HH:mm:ss z yyyy");
+				createdAt = parseDate(json.getString("created_at"), "EEE MMM dd HH:mm:ss z yyyy");
 				following = getBoolean("following", json);
 				verified = getBoolean("verified", json);
-				verifiedType = json.getInt("verifiedType");
-				verifiedReason = json.getString("verifiedReason");
-				allowAllActMsg = json.getBoolean("allowAllActMsg");
-				allowAllComment = json.getBoolean("allowAllComment");
-				followMe = json.getBoolean("followMe");
-				avatarLarge = json.getString("avatarLarge");
-				onlineStatus = json.getInt("onlineStatus");
-				statusId = json.getString("statusId");
-				biFollowersCount = json.getInt("biFollowersCount");
-				if (!json.getString("remark").isEmpty()) {
+				verifiedType = json.getInt("verified_type"); 
+				verifiedReason = json.getString("verified_reason");
+				allowAllActMsg = json.getBoolean("allow_all_act_msg");
+				allowAllComment = json.getBoolean("allow_all_comment");
+				followMe = json.getBoolean("follow_me");
+				avatarLarge = json.getString("avatar_large");
+				onlineStatus = json.getInt("online_status");
+				statusId = json.getString("status_id");
+				biFollowersCount = json.getInt("bi_followers_count");
+				if(!json.getString("remark").isEmpty()){					
 					remark = json.getString("remark");
 				}
 				lang = json.getString("lang");
@@ -359,41 +264,25 @@ public class User extends WeiboResponse implements java.io.Serializable {
 			}
 		}
 	}
-
-	// add by haixinma
-	public static String[] constructIds(String resS) throws WeiboException, weibo4j.model.WeiboException {
-		try {
-			Response res = new Response(resS);
-			JSONArray list = res.asJSONObject().getJSONArray("ids");
-			String temp = list.toString().substring(1, list.toString().length() - 1);
-			String[] ids = temp.split(",");
-			return ids;
-		} catch (JSONException jsone) {
-			throw new WeiboException(jsone.getMessage() + ":" + jsone.toString(), jsone);
-		}
-	}
-
-	public static String[] constructIds(Response res) throws WeiboException, weibo4j.model.WeiboException {
-		try {
-			JSONArray list = res.asJSONObject().getJSONArray("ids");
-			String temp = list.toString().substring(1, list.toString().length() - 1);
-			String[] ids = temp.split(",");
-			return ids;
-		} catch (JSONException jsone) {
-			throw new WeiboException(jsone.getMessage() + ":" + jsone.toString(), jsone);
-		}
-
-	}
-
+	
+	public static String[] constructIds(Response res) throws WeiboException {
+	try {
+		JSONArray list = res.asJSONObject().getJSONArray("ids");
+		String temp = list.toString().substring(1,list.toString().length()-1);
+		String[] ids = temp.split(",");
+		return ids;
+	} catch (JSONException jsone) {
+		throw new WeiboException(jsone.getMessage() + ":" + jsone.toString(), jsone);
+	} 
+}
 	/**
 	 * 
 	 * @param res
 	 * @return
 	 * @throws WeiboException
-	 * @throws weibo4j.model.WeiboException
 	 */
-	public static UserWapper constructWapperUsers(Response res) throws WeiboException, weibo4j.model.WeiboException {
-		JSONObject jsonUsers = res.asJSONObject(); // asJSONArray();
+	public static UserWapper constructWapperUsers(Response res) throws WeiboException {
+		JSONObject jsonUsers = res.asJSONObject(); //asJSONArray();
 		try {
 			JSONArray user = jsonUsers.getJSONArray("users");
 			int size = user.length();
@@ -405,19 +294,18 @@ public class User extends WeiboResponse implements java.io.Serializable {
 			long nextCursor = jsonUsers.getLong("next_cursor");
 			long totalNumber = jsonUsers.getLong("total_number");
 			String hasvisible = jsonUsers.getString("hasvisible");
-			return new UserWapper(users, previousCursor, nextCursor, totalNumber, hasvisible);
+			return new UserWapper(users, previousCursor, nextCursor,totalNumber,hasvisible);
 		} catch (JSONException jsone) {
 			throw new WeiboException(jsone);
 		}
 	}
 
 	/**
-	 * @param res
-	 * @return
+	 * @param res 
+	 * @return 
 	 * @throws WeiboException
-	 * @throws weibo4j.model.WeiboException
 	 */
-	static List<User> constructResult(Response res) throws WeiboException, weibo4j.model.WeiboException {
+	static List<User> constructResult(Response res) throws WeiboException {
 		JSONArray list = res.asJSONArray();
 		try {
 			int size = list.length();
@@ -558,7 +446,6 @@ public class User extends WeiboResponse implements java.io.Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -575,61 +462,42 @@ public class User extends WeiboResponse implements java.io.Serializable {
 			return false;
 		return true;
 	}
-	/*
-	 * @Override /*public String toString() { return "{" + "\"id\"=" + id +
-	 * ", \"screenName\"=\"" + screenName + "\"" + ", \"name\"=\"" + name + "\""
-	 * + ", \"province\"='" + province + "\"" + ", \"city\"=" + city + "\"" +
-	 * ", location='" + location + '\'' + ", description='" + description + '\''
-	 * + ", url='" + url + '\'' + ", profileImageUrl='" + profileImageUrl + '\''
-	 * + ", userDomain='" + userDomain + '\'' + ", gender='" + gender + '\'' +
-	 * ", followersCount='" + followersCount + '\'' + ", friendsCount='" +
-	 * friendsCount + '\'' + ", statusesCount='" + statusesCount + '\'' +
-	 * ", favouritesCount='" + favouritesCount + '\'' + ", createdAt='" +
-	 * createdAt + '\'' + ", following='" + following + '\'' + ", verified='" +
-	 * verified + '\'' + ", verifiedType='" + verifiedType + '\'' +
-	 * ", allowAllActMsg='" + allowAllActMsg + '\'' + ", allowAllComment='" +
-	 * allowAllComment + '\'' + ", followMe='" + followMe + '\'' +
-	 * ", avatarLarge=" + avatarLarge + '\'' + ", onlineStatus=" + onlineStatus
-	 * + '\'' + ", status=" + status + '\'' + ", biFollowersCount=" +
-	 * biFollowersCount + '\'' + ", remark=" + remark + '\'' + ", lang=" + lang
-	 * + '\'' + ", verifiedReason=" + verifiedReason + '\'' + ", weihao=" +
-	 * weihao + '\'' + ", statusId=" + statusId + '\'' + "}"; }
-	 */
-
+	@Override
 	public String toString() {
-		description = description.replace("\"", "\\\"");
-		name = name.replace("\"", "\\\"");
-		url = url.replace("\"", "\\\"");
-		return "{" + "\"id\":" + id + ", \"name\":\"" + name + "\", \"screen_name\":\"" + screenName
-				+ "\", \"location\":\"" + location + "\", \"profile_image_url\":\"" + profileImageUrl
-				+ "\", \"description\":\"" + removeEol(description) + "\", \"url\":\"" + url
-				+ "\", \"followers_count\":" + followersCount + ", \"friends_count\":" + friendsCount
-				+ ", \"created_at\":\"" + createdAt + "\", \"favourites_count\":" + favouritesCount + ", \"following\":"
-				+ following + ", \"statuses_count\":" + statusesCount + ", \"verified\":" + verified + '}';
+		return "User [" +
+		"id=" + id +
+		", screenName=" + screenName + 
+		", name="+ name +
+		", province=" + province + 
+		", city=" + city +
+		", location=" + location + 
+		", description=" + description + 
+		", url=" + url + 
+		", profileImageUrl=" + profileImageUrl + 
+		", userDomain=" + userDomain + 
+		", gender=" + gender + 
+		", followersCount=" + followersCount + 
+		", friendsCount=" + friendsCount + 
+		", statusesCount=" + statusesCount + 
+		", favouritesCount=" + favouritesCount + 
+		", createdAt=" + createdAt + 
+		", following=" + following + 
+		", verified=" + verified + 
+		", verifiedType=" + verifiedType + 
+		", allowAllActMsg=" + allowAllActMsg + 
+		", allowAllComment=" + allowAllComment + 
+		", followMe=" + followMe + 
+		", avatarLarge=" + avatarLarge + 
+		", onlineStatus=" + onlineStatus + 
+		", status=" + status + 
+		", biFollowersCount=" + biFollowersCount + 
+		", remark=" + remark + 
+		", lang=" + lang +
+		", verifiedReason="  + verifiedReason +
+		", weihao=" + weihao +
+		", statusId=" + statusId +
+		"]";
 	}
 
-	public static String removeEol(String text) {
-		if (text == null) {
-			return text;
-		}
-		if (text.contains("\n")) {
-			text = text.replaceAll("\n", "");
-		}
-		if (text.contains("\r")) {
-			text = text.replaceAll("\r", "");
-		}
-		if (text.contains("\n\r")) {
-			text = text.replaceAll("\n", "\n\r");
-		}
-		if (text.contains("\r\n")) {
-			text = text.replaceAll("\r\n", "");
-		}
-		return text;
-	}
-
-	public static UserWapper constructWapperUsers(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

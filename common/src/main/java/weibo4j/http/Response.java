@@ -97,11 +97,10 @@ public class Response {
     }
 
     // for test purpose
-    /*package*/ public Response(String content) {
+    /*package*/ Response(String content) {
         this.responseAsString = content;
     }
 
-    
     public int getStatusCode() {
         return statusCode;
     }
@@ -199,7 +198,6 @@ public class Response {
         try {
             return new JSONObject(asString());
         } catch (JSONException jsone) {
-            //throw new WeiboException(jsone.getMessage(), jsone);
             throw new WeiboException(jsone.getMessage() + ":" + this.responseAsString, jsone);
         }
     }

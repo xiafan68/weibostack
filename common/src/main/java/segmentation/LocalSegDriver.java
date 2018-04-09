@@ -5,9 +5,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import weibo4j.WeiboException;
+import weibo4j.http.Response;
 import weibo4j.model.Status;
 import weibo4j.model.StatusWapper;
+import weibo4j.model.WeiboException;
 
 public class LocalSegDriver {
 	public static void main(String[] args) throws IOException, WeiboException,
@@ -19,7 +20,9 @@ public class LocalSegDriver {
 		String line = null;
 		try {
 			while (null != (line = dis.readLine())) {
-				StatusWapper wrapper = Status.constructWapperStatus(line);
+				Response response = new Response();
+				response.setResponseAsString(line);
+				StatusWapper wrapper = Status.constructWapperStatus(response);
 				// List<Status> statuses = Status.constructStatuses(line);
 				for (Status status : wrapper.getStatuses()) {
 					System.out.println("user:" + status.getUser()

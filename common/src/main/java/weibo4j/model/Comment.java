@@ -1,6 +1,5 @@
 package weibo4j.model;
 
-import weibo4j.WeiboException;
 import weibo4j.http.Response;
 import weibo4j.org.json.JSONArray;
 import weibo4j.org.json.JSONException;
@@ -10,9 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Comment extends WeiboResponse implements java.io.Serializable {
+public class Comment extends WeiboResponse {
 
-	private static final long serialVersionUID = 1272011191310628589L;
+	private static final long serialVersionUID = -6981150504900709672L;
 	private Date createdAt;                    //评论时间
 	private long id;                           //评论id
 	private String mid;						   //评论id
@@ -23,7 +22,7 @@ public class Comment extends WeiboResponse implements java.io.Serializable {
 	private User user = null;                  //User对象
 	private Status status = null;              //Status对象
 
-	/*package*/public Comment(Response res) throws WeiboException, WeiboException, weibo4j.model.WeiboException {
+	/*package*/public Comment(Response res) throws WeiboException {
 		super(res);
 		JSONObject json =res.asJSONObject();
 		try {
@@ -44,7 +43,7 @@ public class Comment extends WeiboResponse implements java.io.Serializable {
 		}
 	}
 
-	public Comment(JSONObject json)throws WeiboException, JSONException, weibo4j.model.WeiboException{
+	public Comment(JSONObject json)throws WeiboException, JSONException{
 		id = json.getLong("id");
 		mid = json.getString("mid");
 		idstr = json.getString("idstr");
@@ -59,7 +58,7 @@ public class Comment extends WeiboResponse implements java.io.Serializable {
 			replycomment = (new Comment(json.getJSONObject("reply_comment")));
 	}
 
-	public Comment(String str) throws WeiboException, JSONException, weibo4j.model.WeiboException {
+	public Comment(String str) throws WeiboException, JSONException {
 		// StatusStream uses this constructor
 		super();
 		JSONObject json = new JSONObject(str);
@@ -77,7 +76,7 @@ public class Comment extends WeiboResponse implements java.io.Serializable {
 			replycomment = (new Comment(json.getJSONObject("reply_comment")));
 	}
 
-	public static CommentWapper constructWapperComments(Response res) throws WeiboException, weibo4j.model.WeiboException {
+	public static CommentWapper constructWapperComments(Response res) throws WeiboException {
 		JSONObject json = res.asJSONObject(); //asJSONArray();
 		try {
 			JSONArray comments = json.getJSONArray("comments");
@@ -95,6 +94,23 @@ public class Comment extends WeiboResponse implements java.io.Serializable {
 			throw new WeiboException(jsone);
 		}
 	}
+	
+	public static List<Comment> constructComment(Response res)
+			throws WeiboException {
+
+		try {
+			JSONArray array = res.asJSONArray();
+			int size = array.length();
+			List<Comment> comment = new ArrayList<Comment>(size);
+			for (int i = 0; i < size; i++) {
+				comment.add(new Comment(array.getJSONObject(i)));
+			}
+			return comment;
+		} catch (JSONException jsone) {
+			throw new WeiboException(jsone);
+		}
+	}
+	
 	public Date getCreatedAt() {
 		return createdAt;
 	}

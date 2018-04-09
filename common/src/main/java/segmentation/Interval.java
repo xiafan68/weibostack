@@ -27,15 +27,6 @@ public class Interval {
 		this.start = start;
 		this.end = end;
 		this.aggValue = value;
-		this.hist = hist;
-	}
-
-	public MaxHistogram getHist() {
-		return hist;
-	}
-
-	public void setHist(MaxHistogram hist) {
-		this.hist = hist;
 	}
 
 	/**
@@ -126,14 +117,21 @@ public class Interval {
 	 */
 	@Override
 	public String toString() {
-		return "Interval [aggValue=" + aggValue + ", mid=" + mid + ", start="
-				+ start + ", end=" + end + "]";
+		return "Interval [aggValue=" + aggValue + ", mid=" + mid + ", start=" + start + ", end=" + end + "]";
 	}
 
 	@Override
 	public boolean equals(Object other) {
 		Interval inv = (Interval) other;
 		return mid == inv.mid && aggValue == inv.getAggValue();
+	}
+
+	public MaxHistogram getHist() {
+		return hist;
+	}
+
+	public void setHist(MaxHistogram hist) {
+		this.hist = hist;
 	}
 
 	public void write(DataOutput output) throws IOException {

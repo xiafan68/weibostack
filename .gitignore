@@ -4,6 +4,7 @@
 **/library
 **/.idea
 *~
+.DS_store
 */.classpath
 */.project
 */.settings

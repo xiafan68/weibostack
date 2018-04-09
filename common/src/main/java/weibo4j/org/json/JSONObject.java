@@ -200,8 +200,7 @@ public class JSONObject {
                     x.back();
                 }
             } else if (c != ':') {
-                return;
-                //throw x.syntaxError("Expected a ':' after a key");
+                throw x.syntaxError("Expected a ':' after a key");
             }
             putOnce(key, x.nextValue());
 

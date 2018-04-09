@@ -69,7 +69,6 @@ public class WeiboException extends Exception {
 
     public WeiboException(String msg, Exception cause, int statusCode) {
         super(msg, cause);
-        System.err.println(statusCode);
         this.statusCode = statusCode;
 
     }
